@@ -1,5 +1,15 @@
 # Fusionable
 
+<p align=center>
+    <i>
+    **Fusionable** is a JavaScript/TypeScript library designed for developers who work with Markdown as a content storage format
+    </i>
+</p>
+
+<p align="center">
+    <img src="https://raw.githubusercontent.com/Hi-Folks/fusionable/refs/heads/main/fusionable-cover.png" alt="Fusionable is a JavaScript/TypeScript library designed for developers who work with Markdown as a content storage format">
+</p>
+
 **Fusionable** is a JavaScript/TypeScript library designed for developers who work with Markdown as a content storage format. It provides a powerful and flexible API to parse, filter, and manage collections of Markdown files based on their metadata (frontmatter). With Fusionable, you can easily treat Markdown files as structured content collections, enabling efficient filtering, sorting, and retrieval for various applications, from documentation systems to content-driven websites.
 
 ## Why Fusionable?
