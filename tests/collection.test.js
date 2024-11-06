@@ -38,3 +38,11 @@ test('Fusion Collection Sorting', () => {
     'Post Two',
   );
 });
+
+test('Fusion Collection Limiting', () => {
+  const f = new FusionCollection();
+  f.loadFromDir('./tests/data/');
+  expect(f.getItems()).toHaveLength(3);
+  expect(f.limit(2).getItems()).toHaveLength(2);
+  expect(f.limit(1).getItems()).toHaveLength(1);
+});
