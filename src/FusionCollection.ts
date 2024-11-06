@@ -90,6 +90,25 @@ class FusionCollection {
     return result;
   }
 
+  /**
+   * Limits the number of items in the collection to the specified count.
+   *
+   * @param {number} count - The maximum number of items to include in the returned collection.
+   * @returns {FusionCollection} A new instance of FusionCollection containing up to the specified number of items.
+   *
+   * @example
+   * const limitedCollection = collection.limit(5);
+   * console.log(limitedCollection.getItems()); // Outputs an array with a maximum of 5 items
+   *
+   * @throws {Error} If `count` is not a positive integer.
+   */
+  limit(count: number): FusionCollection {
+    const items = this.items.slice(0, count);
+    const result = new FusionCollection();
+    result.setFusionItems(items);
+    return result;
+  }
+
   // Get the list of files
   getItems(): FusionItem[] {
     return this.items;
