@@ -100,7 +100,6 @@ class FusionCollection {
    * const limitedCollection = collection.limit(5);
    * console.log(limitedCollection.getItems()); // Outputs an array with a maximum of 5 items
    *
-   * @throws {Error} If `count` is not a positive integer.
    */
   limit(count: number): FusionCollection {
     const items = this.items.slice(0, count);
@@ -112,6 +111,15 @@ class FusionCollection {
   // Get the list of files
   getItems(): FusionItem[] {
     return this.items;
+  }
+
+  // Get the list markdown data as array
+  getItemsArray(): any[] {
+    let retVal: any[] = [];
+    this.getItems().forEach((element) => {
+      retVal.push(element.getItem());
+    });
+    return retVal;
   }
 }
 

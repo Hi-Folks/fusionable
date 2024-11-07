@@ -46,3 +46,13 @@ test('Fusion Collection Limiting', () => {
   expect(f.limit(2).getItems()).toHaveLength(2);
   expect(f.limit(1).getItems()).toHaveLength(1);
 });
+
+test('Fusion Collection getItemsArray', () => {
+  const f = new FusionCollection();
+  f.loadFromDir('./tests/data/');
+  expect(f.getItemsArray()).toBeArray();
+  expect(f.getItemsArray()).toHaveLength(3);
+  expect(f.getItemsArray()[0]).toBeTypeOf('object');
+  expect(f.getItemsArray()[0]).toHaveProperty('fields');
+  expect(f.getItemsArray()[0].fields).toMatchObject({ title: 'Post One' });
+});
