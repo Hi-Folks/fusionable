@@ -46,19 +46,41 @@ Example use cases for Fusionable
 
 ## How to use Fusionable
 
-To install dependencies:
+To install Fusionable JS package:
 
 ```bash
-bun install
+bun add fusionable
 ```
 
-To run:
+Then, you can create your Markdown files for example (in the `./src/content` directory):
 
-```bash
-bun run index.ts
+```markdown
+---
+title: "Post One"
+description: This is the first post
+date: "2020-01-01"
+highlight: true
+tags: ["typescript", "markdown"]
+cover: https://picsum.photos/seed/post-1/400/200
+---
+## Hello
+Content of the *first post*.
+
 ```
 
-This project was created using `bun init` in bun v1.1.33. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+You can parse, load, filter and sorting the content via:
+
+```javascript
+import FusionCollection from "fusionable/FusionCollection"
+let contents = new FusionCollection()
+      .loadFromDir(`./src/content`)
+      .limit(3)
+      .orderBy("date")
+      .where({ highlight: true })
+      .getItemsArray();
+```
+
+
 
 
 ## Why Fusionable?
@@ -68,3 +90,8 @@ Markdown is widely used for creating structured, lightweight, and readable conte
 - Content Management as Code: By treating Markdown files as structured data, Fusionable allows developers to use their Markdown files as a content database, with programmatic access for creating dynamic websites, static site generators, or custom documentation tools.
 - Enhanced Content Retrieval: Fusionable simplifies accessing Markdown content collections with a fluent API, so you can filter, sort, and retrieve content effortlessly, all in one place.
 - Flexibility and Extensibility: Fusionable’s API is built with flexibility in mind. It supports various filtering and sorting operations on Markdown collections, making it ideal for use with JavaScript frameworks or other content pipelines.
+
+
+## References
+
+> This project was created using `bun init` in bun v1.1.33. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
