@@ -1,7 +1,7 @@
 {
   "name": "fusionable",
   "description": "JavaScript library for parsing, organizing, and querying collections of Markdown files. Leverage frontmatter metadata to filter, sort, and manage Markdown content with ease.",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "homepage": "https://github.com/Hi-Folks/fusionable",
   "author": "Roberto Butti (https://github.com/roberto-butti)",
   "repository": "Hi-Folks/fusionable",
@@ -11,7 +11,13 @@
   "license": "MIT",
   "module": "index.ts",
   "exports": {
-    "./": "./src/"
+    ".": "./dist/",
+    "./FusionCollection": {
+      "import": "./dist/FusionCollection.js"
+    },
+    "./FusionItem": {
+      "import": "./dist/FusionItem.js"
+    }
   },
   "files": ["dist", "LICENSE", "README.md", "package.json"],
   "type": "module",
@@ -27,6 +33,7 @@
   },
   "scripts": {
     "check-format": "bunx biome format src",
-    "format": "bunx biome format src tests --write"
+    "format": "bunx biome format src tests --write",
+    "prepublish": "bun build ./src/FusionCollection.ts ./src/FusionItem.ts ./src/MarkdownParser.ts --outdir=dist"
   }
 }
