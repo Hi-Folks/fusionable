@@ -13,6 +13,7 @@
   "exports": {
     "./": "./src/"
   },
+  "files": ["dist", "LICENSE", "README.md", "package.json"],
   "type": "module",
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
