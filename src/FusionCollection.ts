@@ -2,8 +2,9 @@ import MarkdownParser from './MarkdownParser';
 import FusionItem from './FusionItem';
 import type { FusionFieldsType, FusionItemType } from './FusionItem';
 
-import fs from 'fs';
-import path from 'path';
+import { readdirSync, statSync, readFileSync } from 'node:fs';
+
+import path from 'node:path';
 
 class FusionCollection {
   private items: FusionItem[] = [];
@@ -35,11 +36,11 @@ class FusionCollection {
   }
 
   loadFromDir(currentPath: string, subfolders: boolean = false) {
-    const items = fs.readdirSync(currentPath);
+    const items = readdirSync(currentPath);
     const mdparse = new MarkdownParser();
     items.forEach((item) => {
       const fullPath = path.join(currentPath, item);
-      const stats = fs.statSync(fullPath);
+      const stats = statSync(fullPath);
       if (stats.isDirectory()) {
         // If item is a directory, recurse if `recursive` is true
         if (subfolders) {
@@ -47,7 +48,7 @@ class FusionCollection {
         }
       } else if (path.extname(item).toLowerCase() === '.md') {
         // If item is a Markdown file, parse it
-        const fileContent = fs.readFileSync(fullPath, 'utf-8');
+        const fileContent = readFileSync(fullPath, 'utf-8');
         this.addMarkdownString(fileContent, fullPath);
       }
     });

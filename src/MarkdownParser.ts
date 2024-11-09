@@ -1,6 +1,5 @@
 import matter from 'gray-matter';
-import fs from 'fs';
-import path from 'path';
+
 import type { FusionItemType } from './FusionItem';
 
 type FrontmatterFields = Array<any>;
