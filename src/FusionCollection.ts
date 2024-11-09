@@ -2,9 +2,9 @@ import MarkdownParser from './MarkdownParser';
 import FusionItem from './FusionItem';
 import type { FusionFieldsType, FusionItemType } from './FusionItem';
 
-import { readdirSync, statSync, readFileSync } from 'node:fs';
+import { readdirSync, statSync, readFileSync } from 'fs';
 
-import path from 'node:path';
+import path from 'path';
 
 class FusionCollection {
   private items: FusionItem[] = [];
