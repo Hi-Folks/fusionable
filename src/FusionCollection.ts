@@ -9,6 +9,16 @@ import path from 'path';
 class FusionCollection {
   private items: FusionItem[] = [];
 
+  private filters: any[] = [];
+  private sorts: any[] = [];
+  private howmany: number = -1;
+
+  resetParams() {
+    this.filters = [];
+    this.sorts = [];
+    this.howmany = -1;
+  }
+
   addFusionItem(
     fields: FusionFieldsType,
     content: string,
@@ -92,10 +102,10 @@ class FusionCollection {
   }
 
   /**
-   * Limits the number of items in the collection to the specified count.
+   * Set the limits the number of items in the collection to the specified count.
    *
    * @param {number} count - The maximum number of items to include in the returned collection.
-   * @returns {FusionCollection} A new instance of FusionCollection containing up to the specified number of items.
+   * @returns {FusionCollection} The instance of FusionCollection with the limit set.
    *
    * @example
    * const limitedCollection = collection.limit(5);
@@ -103,15 +113,24 @@ class FusionCollection {
    *
    */
   limit(count: number): FusionCollection {
-    const items = this.items.slice(0, count);
-    const result = new FusionCollection();
-    result.setFusionItems(items);
-    return result;
+    this.howmany = count;
+    return this;
+  }
+
+  get(): FusionCollection {
+    let items = Array.from(this.items);
+
+    if (this.howmany >= 0) {
+      items = items.slice(0, this.howmany);
+    }
+    const resultFusionCollection = new FusionCollection();
+    resultFusionCollection.setFusionItems(items);
+    return resultFusionCollection;
   }
 
   // Get the list of files
   getItems(): FusionItem[] {
-    return this.items;
+    return this.get().items;
   }
 
   // Get the list markdown data as array
