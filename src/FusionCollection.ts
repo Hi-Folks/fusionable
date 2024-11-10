@@ -10,11 +10,16 @@ export type FusionSortType = {
   field: string;
   direction: string;
 };
+export type FusionFilterType = {
+  field: string;
+  operator: string;
+  value: any;
+};
 
 class FusionCollection {
   private items: FusionItem[] = [];
 
-  private filters: any[] = [];
+  private filters: FusionFilterType[] = [];
   private sortParam: FusionSortType | null = null;
   private howmany: number = -1;
 
@@ -70,16 +75,20 @@ class FusionCollection {
     return this;
   }
 
-  // where method to filter files based on frontmatter fields
+  /**
+   * Adds a filter condition to the collection based on a specified field and value.
+   *
+   * @param {Object} criteria - An object with a single key-value pair specifying the field and value to filter by.
+   * @returns {FusionCollection} The current instance for chaining.
+   */
   where(criteria: any): FusionCollection {
-    const filteredItems = this.items.filter((file) =>
-      Object.entries(criteria).every(
-        ([key, value]) => file.getField(key) === value,
-      ),
-    );
-    const result = new FusionCollection();
-    result.setFusionItems(filteredItems);
-    return result;
+    const filter: FusionFilterType = {
+      field: Object.keys(criteria)[0],
+      operator: '===',
+      value: Object.values(criteria)[0],
+    };
+    this.filters.push(filter);
+    return this;
   }
 
   /**
@@ -113,10 +122,28 @@ class FusionCollection {
     return this;
   }
 
+  /**
+   * Applies all stored filters, sorting, and limit constraints, returning a new filtered collection.
+   *
+   * @returns {FusionCollection} A new FusionCollection instance containing the processed items.
+   *
+   * @description
+   * This method processes the collection by:
+   * 1. Applying all added filters to include only items that meet all conditions.
+   * 2. Sorting the items based on a specified field and direction, if provided.
+   * 3. Limiting the number of items to the specified maximum.
+   */
   get(): FusionCollection {
     let items = Array.from(this.items);
 
-    // ------ SORTING
+    if (this.filters.length > 0) {
+      items = items.filter((file) =>
+        this.filters.every((filter) => {
+          return file.getField(filter.field) === filter.value;
+        }),
+      );
+    }
+
     if (this.sortParam !== null) {
       items = [...items].sort((a, b) => {
         const aField = a.getField(this.sortParam.field);
@@ -136,8 +163,6 @@ class FusionCollection {
       });
     }
 
-    // ======= END SORTING
-
     if (this.howmany >= 0) {
       items = items.slice(0, this.howmany);
     }
@@ -151,11 +176,41 @@ class FusionCollection {
     return this.get().items;
   }
 
-  // Get the list markdown data as array
+  /**
+   * Retrieves an array of raw item data from the collection.
+   *
+   * @returns {any[]} An array containing the raw data of each item in the collection.
+   *
+   * @description
+   * Iterates through each item in the collection, extracting and returning
+   * the raw data for each item as an array. Uses `getItem()` on each element to retrieve its data.
+   */
   getItemsArray(): any[] {
     let retVal: any[] = [];
     this.getItems().forEach((element) => {
       retVal.push(element.getItem());
+    });
+    return retVal;
+  }
+
+  /**
+   * Retrieves an array of metadata for each item in the collection.
+   *
+   * @returns {any[]} An array containing the metadata of each item in the collection.
+   *
+   * @description
+   * For each item in the collection, creates a new `FusionItem` containing
+   * the item's fields and source information. The metadata for each item is then retrieved
+   * using `getItem()` and added to an array, which is returned.
+   * You can use getMetadataArray instead of getItemsArray when you
+   * just need the metadata (the frontmatter) for saving Bytes.
+   */
+  getMetadataArray(): any[] {
+    let retVal: any[] = [];
+    this.getItems().forEach((element) => {
+      let meta = new FusionItem();
+      meta.set(element.getFields(), '', element.getSource());
+      retVal.push(meta.getItem());
     });
     return retVal;
   }

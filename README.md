@@ -48,13 +48,13 @@ Example use cases for Fusionable
 
 ## How to use Fusionable
 
-To install Fusionable JS package:
+To install the Fusionable JS package:
 
 ```bash
 bun add fusionable
 ```
 
-Then, you can create your Markdown files, for example in the `./src/content` directory:
+Then, you can create your Markdown files, for example, in the `./src/content` directory:
 
 ```markdown
 ---
@@ -84,8 +84,108 @@ let contents = new FusionCollection()
 
 
 
+## FusionCollection API
+
+The `FusionCollection` class provides a flexible, chainable API for loading, filtering, sorting, limiting, and retrieving data. Below is a breakdown of the main methods available.
+
+### Method for loading a set of Markdown files from a directory: `loadFromDir()`
+
+`loadFromDir(directoryPath: string): FusionCollection`
+
+Loads content from a specified directory and initializes the collection with items found in that directory.
+
+- Parameter:
+  - `directoryPath` (`string`): The path to the directory from which to load content.
+
+- **Returns**: The `FusionCollection` instance allows for method chaining.
+
+Example:
+
+```javascript
+let collection = new FusionCollection().loadFromDir(`./src/content`);
+```
+
+### Method for filtering markdown content:  `where()`
+
+`where(criteria: Object): FusionCollection`
+
+Adds a filter condition to the collection based on the specified field and value.
+
+- Parameter:
+  - `criteria` (`Object`): An object with a single key-value pair specifying the field to filter by and the value to match.
+- **Returns**: The `FusionCollection` instance allows for method chaining.
+
+Example:
+
+```javascript
+collection.where({ highlight: true });
+```
+
+### Method for sorting Markdown content: `orderBy()`
+
+`orderBy(field: string, direction: 'asc' | 'desc' = 'asc'): FusionCollection`
+
+Specifies the field and direction for sorting the collection.
+
+- Parameters:
+  - `field` (`string`): The name of the field to sort by.
+  - `direction` (`'asc' | 'desc'`, default `'asc'`): The sort direction, either `'asc'` for ascending or `'desc'` for descending.
+
+- **Returns**: The `FusionCollection` instance, allowing for method chaining.
+
+Example:
+
+```javascript
+collection.orderBy("date", "desc");
+```
+
+### Method for limiting the number of Markdown content `limit()`
+
+`limit(count: number): FusionCollection`
+
+Limits the number of items in the collection to the specified count.
+
+- Parameter:
+  - `count` (`number`): The maximum number of items to include in the collection.
+
+- **Returns**: The `FusionCollection` instance, allowing for method chaining.
+
+Example:
+
+```javascript
+collection.limit(3);
+```
+
+### Method for getting an array of content `getItemsArray()`
+
+`getItemsArray(): any[]`
+
+Retrieves an array of raw item data from the collection after applying any specified filters, sorting, and limits.
+
+- **Returns**: An array containing the raw data of each item in the collection (`any[]`).
+
+Example:
+
+```javascript
+let itemsArray = collection.getItemsArray();
+```
+
+### Method for getting array of metadata  `getMetadataArray()`
+
+`getMetadataArray(): any[]`
+
+After applying any specified filters, sorting, and limits, retrieve an array of raw item data from the collection. The difference to `getItemsArray()` is that the `getMetadataArray()` method excludes the markdown content and includes only the metadata. This method is useful if you need only metadata.
+
+- **Returns**: An array containing the raw data of each item in the collection (`any[]`).
+
+Example:
+
+```javascript
+let metadataArray = collection.getMetadataArray();
+```
 
 ## Why Fusionable?
+
 Markdown is widely used for creating structured, lightweight, and readable content. However, Markdown alone lacks the tools for organizing, filtering, and retrieving files based on specific criteria—features that are essential for scaling projects or building complex content management workflows. Fusionable bridges this gap by adding structure and manageability to Markdown collections, so developers can take advantage of the following:
 
 - Metadata-driven Organization: Fusionable reads the **frontmatter** (YAML metadata) in each Markdown file, making it easy to filter, sort, and group content collections based on properties like tags, categories, publish dates, or any custom fields.
