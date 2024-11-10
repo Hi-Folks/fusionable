@@ -6,16 +6,21 @@ import { readdirSync, statSync, readFileSync } from 'fs';
 
 import path from 'path';
 
+export type FusionSortType = {
+  field: string;
+  direction: string;
+};
+
 class FusionCollection {
   private items: FusionItem[] = [];
 
   private filters: any[] = [];
-  private sorts: any[] = [];
+  private sortParam: FusionSortType | null = null;
   private howmany: number = -1;
 
   resetParams() {
     this.filters = [];
-    this.sorts = [];
+    this.sortParam = null;
     this.howmany = -1;
   }
 
@@ -77,28 +82,19 @@ class FusionCollection {
     return result;
   }
 
-  // orderBy method to sort files based on frontmatter fields
+  /**
+   * Specifies the field and direction for sorting the collection.
+   *
+   * @param {string} field - The name of the field to sort by.
+   * @param {'asc' | 'desc'} [direction='asc'] - The sort direction, either 'asc' for ascending or 'desc' for descending.
+   * @returns {FusionCollection} The current instance for chaining.
+   */
   orderBy(field: string, direction: 'asc' | 'desc' = 'asc'): FusionCollection {
-    const sortedFiles = [...this.items].sort((a, b) => {
-      const aField = a.getField(field);
-      const bField = b.getField(field);
-
-      if (aField === undefined || bField === undefined) {
-        return 0;
-      }
-
-      if (aField < bField) {
-        return direction === 'asc' ? -1 : 1;
-      }
-      if (aField > bField) {
-        return direction === 'asc' ? 1 : -1;
-      }
-      return 0;
-    });
-
-    const result = new FusionCollection();
-    result.setFusionItems(sortedFiles);
-    return result;
+    this.sortParam = {
+      field: field,
+      direction: direction,
+    };
+    return this;
   }
 
   /**
@@ -119,6 +115,28 @@ class FusionCollection {
 
   get(): FusionCollection {
     let items = Array.from(this.items);
+
+    // ------ SORTING
+    if (this.sortParam !== null) {
+      items = [...items].sort((a, b) => {
+        const aField = a.getField(this.sortParam.field);
+        const bField = b.getField(this.sortParam.field);
+
+        if (aField === undefined || bField === undefined) {
+          return 0;
+        }
+
+        if (aField < bField) {
+          return this.sortParam.direction === 'asc' ? -1 : 1;
+        }
+        if (aField > bField) {
+          return this.sortParam.direction === 'asc' ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+
+    // ======= END SORTING
 
     if (this.howmany >= 0) {
       items = items.slice(0, this.howmany);
