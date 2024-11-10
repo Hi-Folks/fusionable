@@ -54,7 +54,7 @@ To install Fusionable JS package:
 bun add fusionable
 ```
 
-Then, you can create your Markdown files for example (in the `./src/content` directory):
+Then, you can create your Markdown files, for example in the `./src/content` directory:
 
 ```markdown
 ---
@@ -70,15 +70,15 @@ Content of the *first post*.
 
 ```
 
-You can parse, load, filter and sorting the content via:
+You can parse, load, filter, and sort the content via:
 
 ```javascript
 import FusionCollection from "fusionable/FusionCollection"
 let contents = new FusionCollection()
       .loadFromDir(`./src/content`)
-      .limit(3)
-      .orderBy("date")
       .where({ highlight: true })
+      .orderBy("date")
+      .limit(3)
       .getItemsArray();
 ```
 
@@ -89,10 +89,17 @@ let contents = new FusionCollection()
 Markdown is widely used for creating structured, lightweight, and readable content. However, Markdown alone lacks the tools for organizing, filtering, and retrieving files based on specific criteria—features that are essential for scaling projects or building complex content management workflows. Fusionable bridges this gap by adding structure and manageability to Markdown collections, so developers can take advantage of the following:
 
 - Metadata-driven Organization: Fusionable reads the **frontmatter** (YAML metadata) in each Markdown file, making it easy to filter, sort, and group content collections based on properties like tags, categories, publish dates, or any custom fields.
-- Content Management as Code: By treating Markdown files as structured data, Fusionable allows developers to use their Markdown files as a content database, with programmatic access for creating dynamic websites, static site generators, or custom documentation tools.
+- Content Management as Code: By treating Markdown files as structured data, Fusionable allows developers to use them (their Markdown files) as a content database, with programmatic access for creating dynamic websites, static site generators, or custom documentation tools.
 - Enhanced Content Retrieval: Fusionable simplifies accessing Markdown content collections with a fluent API, so you can filter, sort, and retrieve content effortlessly, all in one place.
 - Flexibility and Extensibility: Fusionable’s API is built with flexibility in mind. It supports various filtering and sorting operations on Markdown collections, making it ideal for use with JavaScript frameworks or other content pipelines.
 
+## Contributing
+
+If you are interested in contributing to Fusionable, you are welcome! You could evaluate the following:
+
+- Improve the documentation in the readme
+- Write a post about Fusionable
+- Contributing to the source code, fixing an issue, or implementing a new feature. For that, my suggestion is to read [the contributing file](https://github.com/Hi-Folks/fusionable/blob/main/CONTRIBUTING.md)
 
 ## References
 

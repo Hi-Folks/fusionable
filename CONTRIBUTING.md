@@ -61,6 +61,14 @@ Before proposing or submitting new features, consider whether they are genuinely
 
 4. **Make Your Changes**
    - Implement your changes in the new branch you created. Ensure your code follows the project's style guidelines and passes any tests.
+   Before to commit your changes, the suggestion is to format the code using the command:
+   ```sh
+   bun run format
+   ```
+   Execute the tests
+   ```sh
+   bun test
+   ```
 
 5. **Commit Your Changes**
    - After making your changes, commit them with a descriptive commit message
