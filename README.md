@@ -65,6 +65,12 @@ To install the Fusionable JS package:
 bun add fusionable
 ```
 
+Or, if you are using NPM and Node, you can install it via the `npm` command:
+
+```bash
+npm i fusionable
+```
+
 Then, you can create your Markdown files, for example, in the `./src/content` directory:
 
 ```markdown
