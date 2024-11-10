@@ -6,9 +6,20 @@
     </i>
 </p>
 
+<p align=center>
+    <a href="https://www.npmjs.com/package/fusionable">
+        <img src="https://img.shields.io/npm/v/fusionable?style=for-the-badge&label=Version" alt="Latest Version on NPM"></a>
+    <a href="https://www.npmjs.com/package/fusionable"
+    ><img src="https://img.shields.io/npm/d18m/fusionable?style=for-the-badge" alt="Total Downloads"></a>
+    <br />
+    <img src="https://img.shields.io/npm/l/fusionable?style=for-the-badge" alt="Packagist License">
+    <img src="https://img.shields.io/github/last-commit/hi-folks/fusionable?style=for-the-badge" alt="GitHub last commit">
+</p>
+
 <p align="center">
     <img src="https://raw.githubusercontent.com/Hi-Folks/fusionable/refs/heads/main/fusionable-cover.png" alt="Fusionable is a JavaScript/TypeScript library designed for developers who work with Markdown as a content storage format">
 </p>
+
 **Fusionable** is a JavaScript/TypeScript library designed for developers who work with Markdown as a content storage format. It provides a powerful and flexible API to parse, filter, and manage collections of Markdown files based on their metadata (frontmatter). With Fusionable, you can easily treat Markdown files as structured content collections, enabling efficient filtering, sorting, and retrieval for various applications, from documentation systems to content-driven websites.
 
 > Fusionable is still under development. We have the version 0.0.*. Feel free to use it in your experiment but not for production. Based on your feedback, we are working hard to make it stable and production-ready.
