@@ -1,7 +1,7 @@
 {
   "name": "fusionable",
   "description": "JavaScript library for parsing, organizing, and querying collections of Markdown files. Leverage frontmatter metadata to filter, sort, and manage Markdown content with ease.",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "homepage": "https://github.com/Hi-Folks/fusionable",
   "author": "Roberto Butti (https://github.com/roberto-butti)",
   "repository": "Hi-Folks/fusionable",
