@@ -6,8 +6,28 @@ import { readdirSync, statSync, readFileSync } from 'fs';
 
 import path from 'path';
 
+export type FusionSortType = {
+  field: string;
+  direction: string;
+};
+export type FusionFilterType = {
+  field: string;
+  operator: string;
+  value: any;
+};
+
 class FusionCollection {
   private items: FusionItem[] = [];
+
+  private filters: FusionFilterType[] = [];
+  private sortParam: FusionSortType | null = null;
+  private howmany: number = -1;
+
+  resetParams() {
+    this.filters = [];
+    this.sortParam = null;
+    this.howmany = -1;
+  }
 
   addFusionItem(
     fields: FusionFieldsType,
@@ -55,47 +75,42 @@ class FusionCollection {
     return this;
   }
 
-  // where method to filter files based on frontmatter fields
+  /**
+   * Adds a filter condition to the collection based on a specified field and value.
+   *
+   * @param {Object} criteria - An object with a single key-value pair specifying the field and value to filter by.
+   * @returns {FusionCollection} The current instance for chaining.
+   */
   where(criteria: any): FusionCollection {
-    const filteredItems = this.items.filter((file) =>
-      Object.entries(criteria).every(
-        ([key, value]) => file.getField(key) === value,
-      ),
-    );
-    const result = new FusionCollection();
-    result.setFusionItems(filteredItems);
-    return result;
-  }
-
-  // orderBy method to sort files based on frontmatter fields
-  orderBy(field: string, direction: 'asc' | 'desc' = 'asc'): FusionCollection {
-    const sortedFiles = [...this.items].sort((a, b) => {
-      const aField = a.getField(field);
-      const bField = b.getField(field);
-
-      if (aField === undefined || bField === undefined) {
-        return 0;
-      }
-
-      if (aField < bField) {
-        return direction === 'asc' ? -1 : 1;
-      }
-      if (aField > bField) {
-        return direction === 'asc' ? 1 : -1;
-      }
-      return 0;
-    });
-
-    const result = new FusionCollection();
-    result.setFusionItems(sortedFiles);
-    return result;
+    const filter: FusionFilterType = {
+      field: Object.keys(criteria)[0],
+      operator: '===',
+      value: Object.values(criteria)[0],
+    };
+    this.filters.push(filter);
+    return this;
   }
 
   /**
-   * Limits the number of items in the collection to the specified count.
+   * Specifies the field and direction for sorting the collection.
+   *
+   * @param {string} field - The name of the field to sort by.
+   * @param {'asc' | 'desc'} [direction='asc'] - The sort direction, either 'asc' for ascending or 'desc' for descending.
+   * @returns {FusionCollection} The current instance for chaining.
+   */
+  orderBy(field: string, direction: 'asc' | 'desc' = 'asc'): FusionCollection {
+    this.sortParam = {
+      field: field,
+      direction: direction,
+    };
+    return this;
+  }
+
+  /**
+   * Set the limits the number of items in the collection to the specified count.
    *
    * @param {number} count - The maximum number of items to include in the returned collection.
-   * @returns {FusionCollection} A new instance of FusionCollection containing up to the specified number of items.
+   * @returns {FusionCollection} The instance of FusionCollection with the limit set.
    *
    * @example
    * const limitedCollection = collection.limit(5);
@@ -103,22 +118,99 @@ class FusionCollection {
    *
    */
   limit(count: number): FusionCollection {
-    const items = this.items.slice(0, count);
-    const result = new FusionCollection();
-    result.setFusionItems(items);
-    return result;
+    this.howmany = count;
+    return this;
+  }
+
+  /**
+   * Applies all stored filters, sorting, and limit constraints, returning a new filtered collection.
+   *
+   * @returns {FusionCollection} A new FusionCollection instance containing the processed items.
+   *
+   * @description
+   * This method processes the collection by:
+   * 1. Applying all added filters to include only items that meet all conditions.
+   * 2. Sorting the items based on a specified field and direction, if provided.
+   * 3. Limiting the number of items to the specified maximum.
+   */
+  get(): FusionCollection {
+    let items = Array.from(this.items);
+
+    if (this.filters.length > 0) {
+      items = items.filter((file) =>
+        this.filters.every((filter) => {
+          return file.getField(filter.field) === filter.value;
+        }),
+      );
+    }
+
+    if (this.sortParam !== null) {
+      items = [...items].sort((a, b) => {
+        const aField = a.getField(this.sortParam.field);
+        const bField = b.getField(this.sortParam.field);
+
+        if (aField === undefined || bField === undefined) {
+          return 0;
+        }
+
+        if (aField < bField) {
+          return this.sortParam.direction === 'asc' ? -1 : 1;
+        }
+        if (aField > bField) {
+          return this.sortParam.direction === 'asc' ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+
+    if (this.howmany >= 0) {
+      items = items.slice(0, this.howmany);
+    }
+    const resultFusionCollection = new FusionCollection();
+    resultFusionCollection.setFusionItems(items);
+    return resultFusionCollection;
   }
 
   // Get the list of files
   getItems(): FusionItem[] {
-    return this.items;
+    return this.get().items;
   }
 
-  // Get the list markdown data as array
+  /**
+   * Retrieves an array of raw item data from the collection.
+   *
+   * @returns {any[]} An array containing the raw data of each item in the collection.
+   *
+   * @description
+   * Iterates through each item in the collection, extracting and returning
+   * the raw data for each item as an array. Uses `getItem()` on each element to retrieve its data.
+   */
   getItemsArray(): any[] {
     let retVal: any[] = [];
     this.getItems().forEach((element) => {
       retVal.push(element.getItem());
+    });
+    return retVal;
+  }
+
+  /**
+   * Retrieves an array of metadata for each item in the collection.
+   *
+   * @returns {any[]} An array containing the metadata of each item in the collection.
+   *
+   * @description
+   * For each item in the collection, creates a new `FusionItem` containing
+   * the item's fields and source information. The metadata for each item is then retrieved
+   * using `getItem()` and added to an array, which is returned.
+   * You can use getMetadataArray instead of getItemsArray when you
+   * just need the metadata (the frontmatter) for saving Bytes.
+   */
+  getMetadataArray(): any[] {
+    let retVal: any[] = [];
+    this.getItems().forEach((element) => {
+      let meta = new FusionItem();
+      meta.set(element.getFields(), '', element.getSource());
+      retVal.push(meta.getItem());
     });
     return retVal;
   }

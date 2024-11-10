@@ -56,3 +56,17 @@ test('Fusion Collection getItemsArray', () => {
   expect(f.getItemsArray()[0]).toHaveProperty('fields');
   expect(f.getItemsArray()[0].fields).toMatchObject({ title: 'Post One' });
 });
+
+test('Fusion Collection getMetadataArray', () => {
+  const f = new FusionCollection();
+  f.loadFromDir('./tests/data/');
+  let meta = f.getMetadataArray();
+  expect(meta).toBeArray();
+  expect(meta).toHaveLength(3);
+  expect(meta[0]).toBeTypeOf('object');
+  expect(meta[0]).toHaveProperty('fields');
+  expect(meta[0].fields).toMatchObject({ title: 'Post One' });
+  expect(meta[0].content).toBe('');
+  expect(meta[0].source).toBeString();
+  expect(meta[0].source).toBe('tests/data/post-1.md');
+});
