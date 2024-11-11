@@ -99,6 +99,14 @@ let contents = new FusionCollection()
       .getItemsArray();
 ```
 
+Or, you can simply get one content via the slug field in the Frontmatter:
+
+```javascript
+const item = new FusionCollection()
+  .loadFromDir('./tests/data/')
+  .getOneBySlug('post-1');
+```
+
 
 
 ## FusionCollection API
@@ -208,6 +216,10 @@ Example:
 const item = new FusionCollection()
   .loadFromDir('./tests/data/')
   .getOneBySlug('post-1');
+// So, you can access to some information/content:
+item.getContent(); // the markdown content
+item.getFields(); // the frontmatter fields
+item.getField("title"); // the title frontmatter field
 ```
 
 The strong assumption here is that you have the `slug` field in your frontmatter sections, for example:
