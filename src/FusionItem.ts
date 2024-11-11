@@ -37,7 +37,7 @@ class FusionItem {
     return this.item.fields;
   }
 
-  getField(fieldName: any): FusionFieldsType {
+  getField(fieldName: any): any {
     return this.item.fields[fieldName];
   }
   getItem() {

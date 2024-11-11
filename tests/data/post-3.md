@@ -1,6 +1,7 @@
 ---
 title: "Post Three"
 date: "2020-02-01"
+slug: "post-3"
 highlight: false
 tags: ["PHP", "tutorial"]
 ---
