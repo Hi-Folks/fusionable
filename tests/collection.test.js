@@ -70,3 +70,28 @@ test('Fusion Collection getMetadataArray', () => {
   expect(meta[0].source).toBeString();
   expect(meta[0].source).toBe('tests/data/post-1.md');
 });
+
+test('Fusion Collection getOneBySlug', () => {
+  const f = new FusionCollection();
+  f.loadFromDir('./tests/data/');
+  let item = f.getOneBySlug('post-1');
+  expect(item).toBeObject();
+  expect(item.getField('slug')).toBe('post-1');
+  expect(item.getSource()).toBe('tests/data/post-1.md');
+});
+
+test('Fusion Collection getOneByFilename', () => {
+  const f = new FusionCollection();
+  f.loadFromDir('./tests/data/');
+  let item = f.getOneByFilename('post-1.md');
+  expect(item).toBeObject();
+  expect(item.getField('slug')).toBe('post-1');
+  expect(item.getSource()).toBe('tests/data/post-1.md');
+
+  const item1 = new FusionCollection()
+    .loadFromDir('./tests/data/')
+    .getOneByFilename('post-1.md');
+  expect(item1).toBeObject();
+  expect(item1.getField('slug')).toBe('post-1');
+  expect(item1.getSource()).toBe('tests/data/post-1.md');
+});

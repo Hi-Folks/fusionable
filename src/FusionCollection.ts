@@ -146,18 +146,18 @@ class FusionCollection {
 
     if (this.sortParam !== null) {
       items = [...items].sort((a, b) => {
-        const aField = a.getField(this.sortParam.field);
-        const bField = b.getField(this.sortParam.field);
+        const aField = a.getField(this.sortParam?.field);
+        const bField = b.getField(this.sortParam?.field);
 
         if (aField === undefined || bField === undefined) {
           return 0;
         }
 
         if (aField < bField) {
-          return this.sortParam.direction === 'asc' ? -1 : 1;
+          return this.sortParam?.direction === 'asc' ? -1 : 1;
         }
         if (aField > bField) {
-          return this.sortParam.direction === 'asc' ? 1 : -1;
+          return this.sortParam?.direction === 'asc' ? 1 : -1;
         }
         return 0;
       });
@@ -213,6 +213,34 @@ class FusionCollection {
       retVal.push(meta.getItem());
     });
     return retVal;
+  }
+
+  /**
+   * Retrieves a single item from the collection by its slug.
+   *
+   * @param {string} slug - The unique slug identifier for the item to retrieve.
+   * @returns {FusionItem | null} The item matching the slug, or `null` if no match is found.
+   */
+  getOneBySlug(slug: string): FusionItem | null {
+    // Find the first item where the slug matches
+    const item = this.items.find(
+      (element) => element.getField('slug') === slug,
+    );
+    return item || null;
+  }
+
+  /**
+   * Retrieves a single item from the collection by its filename.
+   *
+   * @param {string} filename - The filename for the item to retrieve (for example `post-1.md`).
+   * @returns {FusionItem | null} The item matching the filename, or `null` if no match is found.
+   */
+  getOneByFilename(filename: string): FusionItem | null {
+    // Find the first item where the filename matches
+    const item = this.items.find(
+      (element) => element.getSource().split('/').reverse()[0] === filename,
+    );
+    return item || null;
   }
 }
 

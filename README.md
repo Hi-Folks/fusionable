@@ -107,98 +107,120 @@ The `FusionCollection` class provides a flexible, chainable API for loading, fil
 
 ### Method for loading a set of Markdown files from a directory: `loadFromDir()`
 
-`loadFromDir(directoryPath: string): FusionCollection`
-
 Loads content from a specified directory and initializes the collection with items found in that directory.
 
-- Parameter:
-  - `directoryPath` (`string`): The path to the directory from which to load content.
-
-- **Returns**: The `FusionCollection` instance allows for method chaining.
+Parameter:
+- `directoryPath` (`string`): The path to the directory from which to load content.
+It returns: The `FusionCollection` instance allows for method chaining.
 
 Example:
 
 ```javascript
+// loadFromDir(directoryPath: string): FusionCollection
 let collection = new FusionCollection().loadFromDir(`./src/content`);
 ```
 
 ### Method for filtering markdown content:  `where()`
 
-`where(criteria: Object): FusionCollection`
-
 Adds a filter condition to the collection based on the specified field and value.
 
-- Parameter:
-  - `criteria` (`Object`): An object with a single key-value pair specifying the field to filter by and the value to match.
-- **Returns**: The `FusionCollection` instance allows for method chaining.
+Parameter:
+- `criteria` (`Object`): An object with a single key-value pair specifying the field to filter by and the value to match.
+It returns: The `FusionCollection` instance allows for method chaining.
 
 Example:
 
 ```javascript
+// `where(criteria: Object): FusionCollection`
 collection.where({ highlight: true });
 ```
 
 ### Method for sorting Markdown content: `orderBy()`
 
-`orderBy(field: string, direction: 'asc' | 'desc' = 'asc'): FusionCollection`
-
 Specifies the field and direction for sorting the collection.
 
-- Parameters:
-  - `field` (`string`): The name of the field to sort by.
-  - `direction` (`'asc' | 'desc'`, default `'asc'`): The sort direction, either `'asc'` for ascending or `'desc'` for descending.
-
-- **Returns**: The `FusionCollection` instance, allowing for method chaining.
+Parameters:
+- `field` (`string`): The name of the field to sort by.
+- `direction` (`'asc' | 'desc'`, default `'asc'`): The sort direction, either `'asc'` for ascending or `'desc'` for descending.
+It returns: The `FusionCollection` instance, allowing for method chaining.
 
 Example:
 
 ```javascript
+// orderBy(field: string, direction: 'asc' | 'desc' = 'asc'): FusionCollection
 collection.orderBy("date", "desc");
 ```
 
 ### Method for limiting the number of Markdown content `limit()`
 
-`limit(count: number): FusionCollection`
-
 Limits the number of items in the collection to the specified count.
 
-- Parameter:
-  - `count` (`number`): The maximum number of items to include in the collection.
-
-- **Returns**: The `FusionCollection` instance, allowing for method chaining.
+Parameter:
+- `count` (`number`): The maximum number of items to include in the collection.
+It returns: The `FusionCollection` instance, allowing for method chaining.
 
 Example:
 
 ```javascript
+// limit(count: number): FusionCollection
 collection.limit(3);
 ```
 
 ### Method for getting an array of content `getItemsArray()`
 
-`getItemsArray(): any[]`
-
 Retrieves an array of raw item data from the collection after applying any specified filters, sorting, and limits.
 
-- **Returns**: An array containing the raw data of each item in the collection (`any[]`).
+It returns: An array containing the raw data of each item in the collection (`any[]`).
 
 Example:
 
 ```javascript
+// getItemsArray(): any[]
 let itemsArray = collection.getItemsArray();
 ```
 
 ### Method for getting array of metadata  `getMetadataArray()`
 
-`getMetadataArray(): any[]`
-
 After applying any specified filters, sorting, and limits, retrieve an array of raw item data from the collection. The difference to `getItemsArray()` is that the `getMetadataArray()` method excludes the markdown content and includes only the metadata. This method is useful if you need only metadata.
 
-- **Returns**: An array containing the raw data of each item in the collection (`any[]`).
+It returns: An array containing the raw data of each item in the collection (`any[]`).
 
 Example:
 
 ```javascript
+// getMetadataArray(): any[]
 let metadataArray = collection.getMetadataArray();
+```
+
+
+### Method for getting one element by slug  `getOneBySlug()`
+
+Retrieves a single item from the collection by its slug.
+
+Parameter:
+- `slug` (`string`) - The unique slug identifier for the item to retrieve.
+
+It returns: the item matching the slug, or `null` if no match is found. (`FusionItem`).
+
+Example:
+
+```javascript
+const item = new FusionCollection()
+  .loadFromDir('./tests/data/')
+  .getOneBySlug('post-1');
+```
+
+The strong assumption here is that you have the `slug` field in your frontmatter sections, for example:
+
+```markdown
+---
+title: "Post One"
+slug: "post-1"
+date: "2023-01-01"
+tags: ["typescript", "markdown"]
+---
+## Hello
+Content of the *first post*.
 ```
 
 ## Why Fusionable?
