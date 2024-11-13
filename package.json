@@ -35,6 +35,7 @@
     "check-format": "bunx biome format src",
     "format": "bunx biome format src tests --write",
     "check": "bunx tsc --noEmit",
-    "prepublish": "bun build ./src/FusionCollection.ts ./src/FusionItem.ts ./src/MarkdownParser.ts --outdir=dist  --target node"
+    "prepublish": "bun build ./src/FusionCollection.ts ./src/FusionItem.ts ./src/MarkdownParser.ts --outdir=dist  --target node",
+    "check-all": "bun check-format && bun check && bun test"
   }
 }
