@@ -1,6 +1,6 @@
 import { expect, test } from 'bun:test';
 import FusionItem from '../src/FusionItem';
-import FusionCollection from '../src/FusionCollection';
+import FusionCollection, { OperatorEnum } from '../src/FusionCollection';
 
 test('Fusion Item initialized', () => {
   const f = new FusionItem();
@@ -94,4 +94,28 @@ test('Fusion Collection getOneByFilename', () => {
   expect(item1).toBeObject();
   expect(item1.getField('slug')).toBe('post-1');
   expect(item1.getSource()).toBe('tests/data/post-1.md');
+});
+
+test('Fusion Collection filter', () => {
+  const f = new FusionCollection();
+  f.loadFromDir('./tests/data/');
+  expect(f.getItems()).toHaveLength(3);
+  expect(f.filter('highlight').getItems()).toHaveLength(1);
+  expect(f.orderBy('date').getItems()).toHaveLength(1);
+  f.resetParams();
+  expect(f.getItems()).toHaveLength(3);
+  expect(
+    f
+      .filter('date', OperatorEnum.GREATER_THAN_OR_EQUAL, '2023-01-01')
+      .getItems(),
+  ).toHaveLength(2);
+  expect(f.filter('highlight').getItems()).toHaveLength(1);
+  f.resetParams();
+  expect(f.getItems()).toHaveLength(3);
+  expect(f.filter('highlight').getItems()).toHaveLength(1);
+  expect(
+    f
+      .filter('date', OperatorEnum.GREATER_THAN_OR_EQUAL, '2023-01-01')
+      .getItems(),
+  ).toHaveLength(1);
 });

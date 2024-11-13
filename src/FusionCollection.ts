@@ -16,6 +16,17 @@ export type FusionFilterType = {
   value: any;
 };
 
+export enum OperatorEnum {
+  EQUALS = '===',
+  EQUALS_LIGHT = '==',
+  NOT_EQUALS = '!==',
+  NOT_EQUALS_LIGHT = '!=',
+  GREATER_THAN = '>',
+  LESS_THAN = '<',
+  GREATER_THAN_OR_EQUAL = '>=',
+  LESS_THAN_OR_EQUAL = '<=',
+}
+
 class FusionCollection {
   private items: FusionItem[] = [];
 
@@ -84,8 +95,46 @@ class FusionCollection {
   where(criteria: any): FusionCollection {
     const filter: FusionFilterType = {
       field: Object.keys(criteria)[0],
-      operator: '===',
+      operator: OperatorEnum.EQUALS,
       value: Object.values(criteria)[0],
+    };
+    this.filters.push(filter);
+    return this;
+  }
+
+  /**
+   * Adds a filter condition to the collection to narrow down results based on a specified field, operator, and value.
+   *
+   * @param {string} field - The field to apply the filter on.
+   * @param {OperatorEnum} [operator=OperatorEnum.EQUALS] - The comparison operator to use. Defaults to strict equality (`===`).
+   *   Supported operators include `OperatorEnum.EQUALS`, `OperatorEnum.NOT_EQUALS`, `OperatorEnum.GREATER_THAN`, `OperatorEnum.LESS_THAN`,
+   *   `OperatorEnum.GREATER_THAN_OR_EQUAL`, and `OperatorEnum.LESS_THAN_OR_EQUAL`.
+   * @param {any} [value=true] - The value to compare the field against. Defaults to `true`.
+   * @returns {FusionCollection} The current FusionCollection instance, allowing for chainable method calls.
+   *
+   * @example
+   * // Filter items where "status" is "active"
+   * collection.filter("status", OperatorEnum.EQUALS, "active");
+   *
+   * @example
+   * // Filter items where "age" is greater than 18
+   * collection.filter("age", OperatorEnum.GREATER_THAN, 18);
+   *
+   * @example
+   * // Filter items where "highlight" is true (default operator and value)
+   * collection.filter("highlight");
+   */
+  filter(field: string, operator?: OperatorEnum, value?: any) {
+    if (typeof operator === 'undefined') {
+      operator = OperatorEnum.EQUALS;
+    }
+    if (typeof value === 'undefined') {
+      value = true;
+    }
+    const filter: FusionFilterType = {
+      field: field,
+      operator: String(operator),
+      value: value,
     };
     this.filters.push(filter);
     return this;
@@ -139,7 +188,31 @@ class FusionCollection {
     if (this.filters.length > 0) {
       items = items.filter((file) =>
         this.filters.every((filter) => {
-          return file.getField(filter.field) === filter.value;
+          const fieldValue = file.getField(filter.field);
+          const filterValue = filter.value;
+
+          // Apply the operator specified in the filter
+          switch (filter.operator) {
+            case OperatorEnum.EQUALS:
+              return fieldValue === filterValue;
+            case OperatorEnum.EQUALS_LIGHT:
+              return fieldValue == filterValue;
+            case OperatorEnum.GREATER_THAN:
+              return fieldValue > filterValue;
+            case OperatorEnum.LESS_THAN:
+              return fieldValue < filterValue;
+            case OperatorEnum.GREATER_THAN_OR_EQUAL:
+              return fieldValue >= filterValue;
+            case OperatorEnum.LESS_THAN_OR_EQUAL:
+              return fieldValue <= filterValue;
+            case OperatorEnum.NOT_EQUALS_LIGHT:
+              return fieldValue != filterValue;
+            case OperatorEnum.NOT_EQUALS:
+              return fieldValue !== filterValue;
+            default:
+              console.warn(`Unsupported operator: ${filter.operator}`);
+              return false; // Return false for unsupported operators
+          }
         }),
       );
     }

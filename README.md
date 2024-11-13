@@ -128,19 +128,35 @@ Example:
 let collection = new FusionCollection().loadFromDir(`./src/content`);
 ```
 
-### Method for filtering markdown content:  `where()`
+### Method for filtering markdown content:  `filter()`
 
-Adds a filter condition to the collection based on the specified field and value.
+Adds a filter condition to refine the collection based on a specific field, comparison operator, and value.
 
-Parameter:
-- `criteria` (`Object`): An object with a single key-value pair specifying the field to filter by and the value to match.
-It returns: The `FusionCollection` instance allows for method chaining.
+Parameters:
+- `field`: (`string`) — The field to apply the filter on.
+- `operator`: (`OperatorEnum`, optional) — The comparison operator. Defaults to strict equality (`===`). Options include:
+  - OperatorEnum.EQUALS (===)
+  - OperatorEnum.NOT_EQUALS (!==)
+  - OperatorEnum.GREATER_THAN (>)
+  - OperatorEnum.LESS_THAN (<)
+  - OperatorEnum.GREATER_THAN_OR_EQUAL (>=)
+  - OperatorEnum.LESS_THAN_OR_EQUAL (<=)
+- `value`: (`any`, optional) — The value to compare the field against. Defaults to `true`.
+
+It returns the `FusionCollection` instance allows for method chaining.
 
 Example:
 
 ```javascript
-// `where(criteria: Object): FusionCollection`
-collection.where({ highlight: true });
+// Filter items where "status" is "active"
+collection.filter("status", OperatorEnum.EQUALS, "active");
+
+// Filter items where "age" is greater than 18
+collection.filter("age", OperatorEnum.GREATER_THAN, 18);
+
+// Filter items where "highlight" is true (using default operator and value)
+collection.filter("highlight");
+
 ```
 
 ### Method for sorting Markdown content: `orderBy()`
