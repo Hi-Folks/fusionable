@@ -124,7 +124,11 @@ class FusionCollection {
    * // Filter items where "highlight" is true (default operator and value)
    * collection.filter("highlight");
    */
-  filter(field: string, operator?: OperatorEnum, value?: any) {
+  filter(
+    field: string,
+    operator?: OperatorEnum,
+    value?: any,
+  ): FusionCollection {
     if (typeof operator === 'undefined') {
       operator = OperatorEnum.EQUALS;
     }
