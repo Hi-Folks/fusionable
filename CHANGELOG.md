@@ -1,6 +1,13 @@
 # Changelog
 
-## 0.0.9 - W.I.P.
+## 0.0.11 - WIP
+- Adding return type to filter() method
+
+## 0.0.10 - 13 November 2024
+- Adding check-all script in package.json
+- Welcome to filter() method and OperatorEnum
+
+## 0.0.9 - 13 November 2024
 - Implement `getOneBySlug()`, it retreives just one element (not an array) based on `slug` field in frontmatter section
 - Implement `getOneByFilename()`, it retreives just one element (not an array) based on the Markdown filename (for example `post-1.md`
 
