@@ -1,7 +1,8 @@
 # Changelog
 
-## 0.0.11 - WIP
+## 0.0.11 - 16 November 2024
 - Adding return type to filter() method
+- Adding types
 
 ## 0.0.10 - 13 November 2024
 - Adding check-all script in package.json
