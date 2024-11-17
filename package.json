@@ -42,7 +42,8 @@
     "format": "bunx biome format src tests --write",
     "check": "bunx tsc --noEmit",
     "prepublish": "bun build ./src/FusionCollection.ts ./src/FusionItem.ts ./src/MarkdownParser.ts --outdir=dist  --target node",
-    "check-all": "bun check-format && bun check && bun test",
+    "eslint": "bunx eslint src tests/collection.test.js",
+    "check-all": "bun check-format && bun check && bun run eslint && bun test",
     "generate-types": "bunx  tsc src/Fusion*.ts --skipLibCheck --esModuleInterop --declaration --allowJs --emitDeclarationOnly --outDir dist",
     "build-publish": "bun run prepublish && bun run generate-types && bun publish",
     "build-test": "bun run prepublish && bun run generate-types && bun pm pack"
