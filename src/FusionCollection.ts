@@ -1,6 +1,6 @@
 import MarkdownParser from './MarkdownParser';
 import FusionItem from './FusionItem';
-import type { FusionFieldsType, FusionItemType } from './FusionItem';
+import type { FusionFieldsType } from './FusionItem';
 
 import { readdirSync, statSync, readFileSync } from 'fs';
 
@@ -68,7 +68,6 @@ class FusionCollection {
 
   loadFromDir(currentPath: string, subfolders: boolean = false) {
     const items = readdirSync(currentPath);
-    const mdparse = new MarkdownParser();
     items.forEach((item) => {
       const fullPath = path.join(currentPath, item);
       const stats = statSync(fullPath);

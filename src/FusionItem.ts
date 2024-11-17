@@ -1,4 +1,4 @@
-export type FusionFieldsType = Record<string, any>;
+export type FusionFieldsType = { [key: string]: any };
 export interface FusionItemType {
   fields: FusionFieldsType;
   content: string;

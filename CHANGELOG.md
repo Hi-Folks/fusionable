@@ -1,8 +1,9 @@
 # Changelog
 
-## 0.0.14 - WIP
+## 0.1.0 - 17 November 2024
 - Added eslint as development dependency
 - Fix eslint warnings
+- Updating types auto-generation process (.d.ts) via `bun run generate-types`
 
 ## 0.0.13 - 16 November 2024
 - Updating FusionFieldsType
