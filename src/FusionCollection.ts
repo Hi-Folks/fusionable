@@ -1,6 +1,6 @@
 import MarkdownParser from './MarkdownParser';
 import FusionItem from './FusionItem';
-import type { FusionFieldsType, FusionItemType } from './FusionItem';
+import type { FusionFieldsType } from './FusionItem';
 
 import { readdirSync, statSync, readFileSync } from 'fs';
 
@@ -68,7 +68,6 @@ class FusionCollection {
 
   loadFromDir(currentPath: string, subfolders: boolean = false) {
     const items = readdirSync(currentPath);
-    const mdparse = new MarkdownParser();
     items.forEach((item) => {
       const fullPath = path.join(currentPath, item);
       const stats = statSync(fullPath);
@@ -263,7 +262,7 @@ class FusionCollection {
    * the raw data for each item as an array. Uses `getItem()` on each element to retrieve its data.
    */
   getItemsArray(): any[] {
-    let retVal: any[] = [];
+    const retVal: any[] = [];
     this.getItems().forEach((element) => {
       retVal.push(element.getItem());
     });
@@ -283,9 +282,9 @@ class FusionCollection {
    * just need the metadata (the frontmatter) for saving Bytes.
    */
   getMetadataArray(): any[] {
-    let retVal: any[] = [];
+    const retVal: any[] = [];
     this.getItems().forEach((element) => {
-      let meta = new FusionItem();
+      const meta = new FusionItem();
       meta.set(element.getFields(), '', element.getSource());
       retVal.push(meta.getItem());
     });
