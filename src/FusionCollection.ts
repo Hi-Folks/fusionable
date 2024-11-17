@@ -263,7 +263,7 @@ class FusionCollection {
    * the raw data for each item as an array. Uses `getItem()` on each element to retrieve its data.
    */
   getItemsArray(): any[] {
-    let retVal: any[] = [];
+    const retVal: any[] = [];
     this.getItems().forEach((element) => {
       retVal.push(element.getItem());
     });
@@ -283,9 +283,9 @@ class FusionCollection {
    * just need the metadata (the frontmatter) for saving Bytes.
    */
   getMetadataArray(): any[] {
-    let retVal: any[] = [];
+    const retVal: any[] = [];
     this.getItems().forEach((element) => {
-      let meta = new FusionItem();
+      const meta = new FusionItem();
       meta.set(element.getFields(), '', element.getSource());
       retVal.push(meta.getItem());
     });

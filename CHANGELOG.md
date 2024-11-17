@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.0.14 - WIP
+- Added eslint as development dependency
+- Fix eslint warnings
+
+## 0.0.13 - 16 November 2024
+- Updating FusionFieldsType
+
+## 0.0.12 - 16 November 2024
+- Updating FusionFieldsType
+
 ## 0.0.11 - 16 November 2024
 - Adding return type to filter() method
 - Adding types
