@@ -39,10 +39,11 @@ let contents = new FusionCollection()
 
 ```
 
-Once you read this README, you can explore more how to use Fusionable with SvelteKit and Nextjs:
+Once you read this README, you can explore more how to use Fusionable with SvelteKit, Nextjs, and Nuxt:
 
-- [How to Build a Content-Driven Static Site with Markdown, SvelteKit and Fusionable](https://dev.to/robertobutti/how-to-build-a-content-driven-static-site-with-markdown-sveltekit-and-fusionable-347f)
-- [Building a website using Markdown content with Next.js App Router and Fusionable](https://dev.to/robertobutti/building-a-website-using-markdown-content-with-nextjs-app-router-and-fusionable-4kj7)
+- **SvelteKit**: [How to Build a Content-Driven Static Site with Markdown, SvelteKit and Fusionable](https://dev.to/robertobutti/how-to-build-a-content-driven-static-site-with-markdown-sveltekit-and-fusionable-347f)
+- **Next.js**: [Building a website using Markdown content with Next.js App Router and Fusionable](https://dev.to/robertobutti/building-a-website-using-markdown-content-with-nextjs-app-router-and-fusionable-4kj7)
+- **Nuxt**: [Build a static website with Markdown content, using Nuxt and Fusionable (server API approach)](https://dev.to/robertobutti/build-a-static-website-with-markdown-content-using-nuxt-and-fusionable-server-api-approach-2o65)
 
 ## What is Fusionable?
 Fusionable is a library that allows you to organize, filter, and query **collections of Markdown files**. It leverages frontmatter metadata in each file, enabling you to:
