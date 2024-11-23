@@ -32,7 +32,7 @@ An example of using Fusionable for handling Markdown content:
 
 let contents = new FusionCollection()
       .loadFromDir(`./src/content`) //load markdown files from a directory
-      .where({ highlight: true }) // filtering
+      .filter("highlight") // filtering
       .orderBy("date") // sorting markdown by `date` field
       .limit(3) // limiting the result
       .getItemsArray();
