@@ -1,7 +1,6 @@
 # Changelog
 
-## 0.1.1 - WIP
-
+## 0.1.1 - 23 November 2024
 - Handling fields in FusionItemType as Object instead of array
 
 ## 0.1.0 - 17 November 2024
