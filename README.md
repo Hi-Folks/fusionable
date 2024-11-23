@@ -97,7 +97,7 @@ You can parse, load, filter, and sort the content via:
 import FusionCollection from "fusionable/FusionCollection"
 let contents = new FusionCollection()
       .loadFromDir(`./src/content`)
-      .where({ highlight: true })
+      .filter('highlight')
       .orderBy("date")
       .limit(3)
       .getItemsArray();
