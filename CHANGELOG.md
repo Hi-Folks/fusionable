@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1 - WIP
+
+- Handling fields in FusionItemType as Object instead of array
+
 ## 0.1.0 - 17 November 2024
 - Added eslint as development dependency
 - Fix eslint warnings

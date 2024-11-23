@@ -7,13 +7,13 @@ export interface FusionItemType {
 
 class FusionItem {
   private item: FusionItemType = {
-    fields: [],
+    fields: {},
     content: '',
     source: '',
   };
 
   constructor() {
-    this.set([], '', '');
+    this.set({}, '', '');
   }
 
   set(fields: FusionFieldsType, content: string, source: string): FusionItem {
@@ -40,7 +40,7 @@ class FusionItem {
   getField(fieldName: any): any {
     return this.item.fields[fieldName];
   }
-  getItem() {
+  getItem(): FusionItemType {
     return this.item;
   }
 }
