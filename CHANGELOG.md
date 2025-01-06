@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.2 - 6 January 2025
+- Frontmatter is no more mandatory for loading, parsing and filtering markdown files
+
 ## 0.1.1 - 23 November 2024
 - Handling fields in FusionItemType as Object instead of array
 

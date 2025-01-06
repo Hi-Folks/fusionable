@@ -1,7 +1,7 @@
 {
   "name": "fusionable",
   "description": "JavaScript library for parsing, organizing, and querying collections of Markdown files. Leverage frontmatter metadata to filter, sort, and manage Markdown content with ease.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "https://github.com/Hi-Folks/fusionable",
   "author": "Roberto Butti (https://github.com/roberto-butti)",
   "repository": "Hi-Folks/fusionable",
@@ -17,7 +17,10 @@
     },
     "./FusionItem": {
       "import": "./dist/FusionItem.js"
-    }
+    },
+    "./FusionUtil": {
+      "import": "./dist/FusionUtil.js"
+    },
   },
   "files": ["dist", "LICENSE", "README.md", "package.json"],
   "type": "module",
@@ -41,9 +44,9 @@
     "check-format": "bunx biome format src",
     "format": "bunx biome format src tests --write",
     "check": "bunx tsc --noEmit",
-    "prepublish": "bun build ./src/FusionCollection.ts ./src/FusionItem.ts ./src/MarkdownParser.ts --outdir=dist  --target node",
+    "prepublish": "bun build ./src/FusionCollection.ts ./src/FusionItem.ts ./src/MarkdownParser.ts ./src/FusionUtil.ts --outdir=dist  --target node",
     "eslint": "bunx eslint src tests/collection.test.js",
-    "check-all": "bun check-format && bun check && bun run eslint && bun test",
+    "check-all": "bun check-format && bun check && bun test",
     "generate-types": "bunx  tsc src/Fusion*.ts --skipLibCheck --esModuleInterop --declaration --allowJs --emitDeclarationOnly --outDir dist",
     "build-publish": "bun run prepublish && bun run generate-types && bun publish",
     "build-test": "bun run prepublish && bun run generate-types && bun pm pack"

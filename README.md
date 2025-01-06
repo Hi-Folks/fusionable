@@ -220,6 +220,26 @@ Example:
 let metadataArray = collection.getMetadataArray();
 ```
 
+### Method for getting one element by its filename `getOneByFilename()`
+
+The `getOneFilename()` allows you to retrieve one item (`FusionItem` and not `FusionCollection`) by filename.
+
+Parameter:
+- `filename` (`string`) - the filename with the extension and no path (`post-1.md`)
+
+It returns: the item (`FusionItem`) matching the filename, or `null` if no match is found.
+
+Example:
+
+```js
+let filename = 'post-1.md';
+let dir = './tests/data/no-frontmatter';
+let post = new FusionCollection()
+            .loadFromDir(dir)
+            .getOneByFilename(filename);
+console.log(post.getContent());
+console.log(post.getSource()); // 'tests/data/no-frontmatter/post-1.md'
+```
 
 ### Method for getting one element by slug  `getOneBySlug()`
 
