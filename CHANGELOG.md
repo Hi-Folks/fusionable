@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.3 - 6 January 2025
+- getFilename and getName for FusionItem
+
 ## 0.1.2 - 6 January 2025
 - Frontmatter is no more mandatory for loading, parsing and filtering markdown files
 

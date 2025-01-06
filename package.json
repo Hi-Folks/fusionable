@@ -1,7 +1,7 @@
 {
   "name": "fusionable",
   "description": "JavaScript library for parsing, organizing, and querying collections of Markdown files. Leverage frontmatter metadata to filter, sort, and manage Markdown content with ease.",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "homepage": "https://github.com/Hi-Folks/fusionable",
   "author": "Roberto Butti (https://github.com/roberto-butti)",
   "repository": "Hi-Folks/fusionable",
@@ -20,19 +20,19 @@
     },
     "./FusionUtil": {
       "import": "./dist/FusionUtil.js"
-    },
+    }
   },
   "files": ["dist", "LICENSE", "README.md", "package.json"],
   "type": "module",
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "@eslint/js": "^9.15.0",
+    "@eslint/js": "^9.17.0",
     "@types/bun": "latest",
-    "@typescript-eslint/eslint-plugin": "^8.15.0",
-    "@typescript-eslint/parser": "^8.15.0",
+    "@typescript-eslint/eslint-plugin": "^8.19.1",
+    "@typescript-eslint/parser": "^8.19.1",
     "eslint": "^8.57.1",
-    "globals": "^15.12.0",
-    "typescript-eslint": "^8.15.0"
+    "globals": "^15.14.0",
+    "typescript-eslint": "^8.19.1"
   },
   "peerDependencies": {
     "typescript": "^5.6.3"

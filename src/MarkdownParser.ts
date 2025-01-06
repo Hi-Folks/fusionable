@@ -1,6 +1,10 @@
 import matter from 'gray-matter';
 
 import type { FusionItemType } from './FusionItem';
+import {
+  getFilenameFromPath,
+  getFilenameNoExtensionFromPath,
+} from './FusionUtil';
 
 class MarkdownParser {
   // Load frontmatter and markdown content as string and parse frontmatter
@@ -10,6 +14,8 @@ class MarkdownParser {
       fields: res.data,
       content: res.content,
       source: source,
+      name: getFilenameNoExtensionFromPath(source),
+      filename: getFilenameFromPath(source),
     };
   }
 }

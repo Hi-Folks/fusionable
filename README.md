@@ -239,6 +239,9 @@ let post = new FusionCollection()
             .getOneByFilename(filename);
 console.log(post.getContent());
 console.log(post.getSource()); // 'tests/data/no-frontmatter/post-1.md'
+console.log(post.getFilename()); // 'post-1.md'
+console.log(post.getName()); // 'post-1'
+
 ```
 
 ### Method for getting one element by slug  `getOneBySlug()`
